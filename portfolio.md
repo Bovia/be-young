@@ -7,8 +7,9 @@ tags:
   - Vite
   - Vercel
 demoUrl: https://be-young-nine.vercel.app
-githubUrl: ""
+githubUrl: https://github.com/Bovia/be-young.git
 date: 2026-06
+responsive: "false"
 ---
 
 ## 为什么做这个
@@ -22,16 +23,6 @@ date: 2026-06
 ## 一个值得说技术决定
 
 成长不靠「吃了几次药」，而看**连续打卡天数**——某天只要确认过一次就算成功，今天还没打也不会立刻断档，给老人留补救空间：
-
-```js
-const STAGES = [
-  { min: 0,  emoji: '🌱', name: '种子' },
-  { min: 3,  emoji: '🌿', name: '小苗' },
-  { min: 7,  emoji: '🪴', name: '茁壮幼树' },
-  { min: 15, emoji: '🌳', name: '小树' },
-  { min: 30, emoji: '🌲', name: '长青树' }
-]
-```
 
 先把产品跑通，数据存在浏览器本地；同一套 uni-app 代码既能编译成网页上线 Vercel，也预留了小程序路径，不急着绑数据库。
 
