@@ -9,7 +9,8 @@ tags:
 demoUrl: https://be-young-nine.vercel.app
 githubUrl: https://github.com/Bovia/be-young.git
 date: 2026-06
-responsive: "false"
+devices:
+  - mobile
 ---
 
 ## 为什么做这个
