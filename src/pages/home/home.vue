@@ -34,7 +34,7 @@
           <view
             v-for="item in group.items"
             :key="item.key"
-            class="card med-item"
+            class="med-item"
             :class="{ done: item.taken }"
             @click="onTapItem(item)"
           >
@@ -148,7 +148,7 @@ function onTapItem(item) {
       content: `把「${item.name}（${item.timing}）」改回"还没吃"？`,
       confirmText: '是的，撤销',
       cancelText: '手滑了，不撤',
-      confirmColor: '#dd524d',
+      confirmColor: '#FF3B30',
       success: (res) => {
         if (res.confirm) undoItem(item.medId, item.timing)
       }
@@ -180,114 +180,117 @@ function goMeds() {
 
 <style scoped>
 .home {
-  padding-top: calc(env(safe-area-inset-top) + 40rpx);
+  padding-top: calc(env(safe-area-inset-top) + 24rpx);
 }
 
-/* 问候 */
-.greet { text-align: center; margin-bottom: 20rpx; }
-.greet-title { font-size: 46rpx; font-weight: 800; }
-.greet-sub { font-size: 28rpx; color: var(--text-sub); margin-top: 10rpx; }
+.greet { text-align: center; margin-bottom: 32rpx; padding: 0 8rpx; }
+.greet-title { font-size: 44rpx; font-weight: 600; letter-spacing: -0.3rpx; }
+.greet-sub { font-size: 30rpx; color: var(--text-sub); margin-top: 12rpx; line-height: 1.45; }
 
-/* 种树区 */
 .tree-zone {
   display: flex; flex-direction: column; align-items: center;
-  padding: 20rpx 0 10rpx;
+  padding: 16rpx 0 24rpx;
 }
 .tree-emoji { font-size: 180rpx; line-height: 1.1; }
 .tree-emoji.pop { animation: pop 0.6s ease; }
 @keyframes pop {
   0%   { transform: scale(1); }
-  40%  { transform: scale(1.35) rotate(-6deg); }
-  70%  { transform: scale(0.95) rotate(4deg); }
+  40%  { transform: scale(1.2) rotate(-4deg); }
+  70%  { transform: scale(0.96) rotate(3deg); }
   100% { transform: scale(1); }
 }
-.tree-name { font-size: 44rpx; font-weight: 800; color: var(--primary-dark); margin-top: 10rpx; }
+.tree-name { font-size: 40rpx; font-weight: 600; color: var(--text); margin-top: 12rpx; }
 .tree-desc { font-size: 28rpx; color: var(--text-sub); margin-top: 6rpx; }
 .streak-badge {
-  margin-top: 24rpx;
-  background: #fbe9c6; color: #a9701a;
-  font-weight: 700; font-size: 30rpx;
-  padding: 12rpx 32rpx; border-radius: 999rpx;
+  margin-top: 20rpx;
+  background: var(--fill);
+  color: var(--text-secondary);
+  font-weight: 600; font-size: 28rpx;
+  padding: 12rpx 28rpx; border-radius: 999rpx;
 }
 
-/* 时间段分组 */
-.group { margin-top: 36rpx; }
+.group { margin-top: var(--gap-section); }
 .group-title {
-  display: flex; align-items: center; gap: 12rpx;
-  font-size: 30rpx; font-weight: 700; color: var(--text-sub);
-  margin-bottom: 16rpx;
+  display: flex; align-items: center; gap: 10rpx;
+  font-size: 28rpx; font-weight: 600; color: var(--text-sub);
+  margin-bottom: 12rpx; padding-left: 8rpx;
+  letter-spacing: 0.5rpx;
 }
-.group-title.active { color: var(--primary-dark); }
-.group-dot { font-size: 20rpx; color: var(--text-sub); }
+.group-title.active { color: var(--text); }
+.group-dot { font-size: 16rpx; color: var(--text-sub); }
 .group-dot.active { color: var(--primary); }
 .now-badge {
-  font-size: 22rpx; font-weight: 700;
+  font-size: 22rpx; font-weight: 600;
   background: var(--primary); color: #fff;
-  padding: 4rpx 16rpx; border-radius: 999rpx;
+  padding: 4rpx 14rpx; border-radius: 999rpx;
 }
 
-/* 药物卡片 */
-.med-list { display: flex; flex-direction: column; gap: 20rpx; }
+.med-list {
+  display: flex; flex-direction: column;
+  background: var(--card); border-radius: var(--radius-md); overflow: hidden;
+}
 .med-item {
   display: flex; align-items: center;
-  border: 3rpx solid transparent;
-  active-opacity: 0.7;
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid var(--separator);
 }
-.med-item.done { background: #f3f9f4; border-color: #cfe8d6; }
+.med-item:last-child { border-bottom: none; }
+.med-item.done { background: var(--accent-green-soft); }
 
 .check {
-  width: 88rpx; height: 88rpx; border-radius: 50%;
-  border: 5rpx solid #d4dcd6;
+  width: 80rpx; height: 80rpx; border-radius: 50%;
+  border: 3rpx solid var(--fill);
+  background: var(--card);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.check.checked { background: var(--primary); border-color: var(--primary); }
-.check-icon { font-size: 46rpx; color: #fff; font-weight: 900; line-height: 1; }
+.check.checked { background: var(--accent-green); border-color: var(--accent-green); }
+.check-icon { font-size: 40rpx; color: #fff; font-weight: 700; line-height: 1; }
 
-.med-info { flex: 1; margin-left: 24rpx; }
-.med-name { font-size: 38rpx; font-weight: 700; }
-.med-detail { font-size: 28rpx; color: var(--text-sub); margin-top: 6rpx; }
+.med-info { flex: 1; margin-left: 20rpx; min-width: 0; }
+.med-name { font-size: 36rpx; font-weight: 600; }
+.med-detail { font-size: 28rpx; color: var(--text-sub); margin-top: 4rpx; }
 
 .status-tag {
-  font-size: 30rpx; font-weight: 700;
-  padding: 10rpx 20rpx; border-radius: 16rpx;
+  font-size: 26rpx; font-weight: 600;
+  padding: 8rpx 16rpx; border-radius: 999rpx;
   flex-shrink: 0;
 }
-.tag-todo { color: #b0885a; background: #fdf2e0; }
-.tag-done { color: var(--primary-dark); background: var(--primary-soft); }
+.tag-todo { color: #bf6a00; background: var(--warn-soft); }
+.tag-done { color: #248a3d; background: var(--accent-green-soft); }
 
-/* 一键浇水 */
-.water-wrap { margin-top: 44rpx; }
-.water-btn { height: 120rpx; font-size: 40rpx; }
+.water-wrap { margin-top: 40rpx; }
+.water-btn { height: 108rpx; font-size: 36rpx; border-radius: var(--radius-md); }
 
-/* 空状态 */
-.empty { display: flex; flex-direction: column; align-items: center; gap: 18rpx; margin-top: 30rpx; }
-.empty-emoji { font-size: 90rpx; }
-.empty-text { color: var(--text-sub); font-size: 32rpx; }
-.add-first { height: 100rpx; padding: 0 48rpx; }
+.empty {
+  display: flex; flex-direction: column; align-items: center; gap: 16rpx;
+  margin-top: 24rpx; padding: 48rpx 32rpx;
+}
+.empty-emoji { font-size: 80rpx; }
+.empty-text { color: var(--text-sub); font-size: 30rpx; }
+.add-first { height: 96rpx; padding: 0 48rpx; }
 
-/* 夸夸浮层 */
 .praise-mask {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.4);
   display: flex; align-items: center; justify-content: center;
   z-index: 99;
 }
 .praise-card {
-  background: #fff; border-radius: 40rpx;
-  padding: 60rpx 60rpx 50rpx;
+  background: var(--card); border-radius: var(--radius-lg);
+  padding: 56rpx 48rpx 44rpx;
   display: flex; flex-direction: column; align-items: center;
-  animation: popin 0.35s ease;
-  min-width: 500rpx;
+  animation: popin 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  min-width: 520rpx; max-width: 86%;
 }
 @keyframes popin {
-  from { transform: scale(0.6); opacity: 0; }
+  from { transform: scale(0.92); opacity: 0; }
   to   { transform: scale(1); opacity: 1; }
 }
-.praise-emoji { font-size: 140rpx; }
+.praise-emoji { font-size: 120rpx; }
 .praise-text {
-  font-size: 40rpx; font-weight: 800; color: var(--primary-dark);
-  margin-top: 24rpx; text-align: center; line-height: 1.5;
+  font-size: 36rpx; font-weight: 600; color: var(--text);
+  margin-top: 20rpx; text-align: center; line-height: 1.45;
 }
-.praise-close { height: 100rpx; width: 100%; margin-top: 36rpx; font-size: 36rpx; }
+.praise-close { height: 96rpx; width: 100%; margin-top: 32rpx; font-size: 34rpx; }
 </style>

@@ -35,7 +35,7 @@
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "长青伙伴",
-    "navigationBarBackgroundColor": "#EEF1EA",
-    "backgroundColor": "#EEF1EA"
+    "navigationBarBackgroundColor": "#F2F2F7",
+    "backgroundColor": "#F2F2F7"
   }
 }

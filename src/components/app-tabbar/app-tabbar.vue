@@ -1,13 +1,15 @@
 <template>
   <view class="tabbar">
-    <view
-      v-for="tab in tabs"
-      :key="tab.key"
-      class="tab-item"
-      :class="{ on: current === tab.key }"
-      @click="go(tab)"
-    >
-      <text class="tab-text">{{ tab.text }}</text>
+    <view class="tabbar-inner">
+      <view
+        v-for="tab in tabs"
+        :key="tab.key"
+        class="tab-item"
+        :class="{ on: current === tab.key }"
+        @click="go(tab)"
+      >
+        <text class="tab-text">{{ tab.text }}</text>
+      </view>
     </view>
   </view>
 </template>
@@ -47,26 +49,31 @@ function go(tab) {
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex;
-  background: #fff;
-  border-top: 2rpx solid #eef1ea;
-  padding-bottom: env(safe-area-inset-bottom);
   z-index: 90;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: saturate(180%) blur(40rpx);
+  -webkit-backdrop-filter: saturate(180%) blur(40rpx);
+  border-top: 1rpx solid rgba(60, 60, 67, 0.12);
+}
+.tabbar-inner {
+  display: flex;
+  height: 98rpx;
 }
 .tab-item {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 110rpx;
 }
 .tab-text {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #9aa59a;
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #8e8e93;
+  letter-spacing: -0.2rpx;
 }
 .tab-item.on .tab-text {
-  color: #2e9e5b;
-  font-weight: 800;
+  color: #007aff;
+  font-weight: 600;
 }
 </style>

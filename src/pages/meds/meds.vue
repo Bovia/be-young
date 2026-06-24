@@ -16,7 +16,7 @@
     </view>
 
     <view class="med-list">
-      <view v-for="m in state.meds" :key="m.id" class="card med-item">
+      <view v-for="m in state.meds" :key="m.id" class="med-item">
         <view class="med-info">
           <view class="med-name">{{ m.name }}</view>
           <view class="med-detail">
@@ -304,7 +304,7 @@ function confirmDel(m) {
     content: `确定删除「${m.name}」吗？\n\n删药后请到 iPhone「日历」里搜索「小树该浇水」，手动删掉对应提醒。\n（小程序无法自动删日历里的提醒）`,
     confirmText: '确定删除',
     cancelText: '再想想',
-    confirmColor: '#dd524d',
+    confirmColor: '#FF3B30',
     success: (res) => {
       if (res.confirm) {
         removeMed(m.id)
@@ -361,153 +361,151 @@ function ocrFamily() {
 </script>
 
 <style scoped>
-.meds { padding-top: calc(env(safe-area-inset-top) + 40rpx); }
-.header { margin-bottom: 30rpx; }
+.meds { padding-top: calc(env(safe-area-inset-top) + 24rpx); }
+.header { margin-bottom: var(--gap-section); }
 
-.actions { display: flex; gap: 24rpx; margin-bottom: 30rpx; }
-.act { flex: 1; height: 106rpx; font-size: 34rpx; }
+.actions { display: flex; gap: 16rpx; margin-bottom: var(--gap-section); }
+.act { flex: 1; height: 96rpx; font-size: 32rpx; }
 
-.med-list { display: flex; flex-direction: column; gap: 22rpx; }
-.med-item { display: flex; align-items: center; }
-.med-info { flex: 1; }
-.med-name { font-size: 38rpx; font-weight: 700; }
-.med-detail { font-size: 28rpx; color: var(--text-sub); margin-top: 8rpx; }
-.med-cycle { margin-top: 8rpx; }
+.med-list {
+  display: flex; flex-direction: column;
+  background: var(--card); border-radius: var(--radius-md); overflow: hidden;
+}
+.med-item {
+  display: flex; align-items: center;
+  padding: 28rpx 32rpx;
+  border-bottom: 1rpx solid var(--separator);
+}
+.med-item:last-child { border-bottom: none; }
+.med-info { flex: 1; min-width: 0; }
+.med-name { font-size: 36rpx; font-weight: 600; }
+.med-detail { font-size: 28rpx; color: var(--text-sub); margin-top: 6rpx; line-height: 1.4; }
+.med-cycle { margin-top: 10rpx; }
 .tag {
   display: inline-block;
-  font-size: 24rpx; padding: 6rpx 18rpx; border-radius: 999rpx;
+  font-size: 24rpx; padding: 6rpx 16rpx; border-radius: 999rpx; font-weight: 600;
 }
-.tag-long { background: var(--primary-soft); color: var(--primary-dark); }
-.tag-short { background: #fdf2e0; color: #a9701a; }
+.tag-long { background: var(--accent-green-soft); color: #248a3d; }
+.tag-short { background: var(--warn-soft); color: #bf6a00; }
 
-/* 操作按钮（放大，老人容易点） */
-.ops { display: flex; gap: 14rpx; }
+.ops { display: flex; gap: 12rpx; flex-shrink: 0; margin-left: 16rpx; }
 .op-btn {
-  height: 76rpx; padding: 0 28rpx; border-radius: 20rpx;
-  font-size: 28rpx; font-weight: 700; border: none;
+  height: 72rpx; padding: 0 24rpx; border-radius: var(--radius-sm);
+  font-size: 28rpx; font-weight: 600; border: none;
 }
 .op-btn::after { border: none; }
-.edit-btn { background: #eef1ea; color: var(--primary-dark); }
-.del-btn { background: #fdecec; color: #dd524d; }
+.edit-btn { background: var(--fill); color: var(--primary); }
+.del-btn { background: var(--danger-soft); color: var(--danger); }
 
-.empty { display: flex; flex-direction: column; align-items: center; gap: 16rpx; margin-bottom: 24rpx; }
-.empty-emoji { font-size: 80rpx; }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 14rpx; margin-bottom: 24rpx; padding: 48rpx 32rpx; }
+.empty-emoji { font-size: 72rpx; }
 .empty-text { color: var(--text-sub); font-size: 30rpx; }
 
-/* 弹出表单 */
 .mask {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
   display: flex; align-items: flex-end; z-index: 99;
 }
 .sheet {
-  width: 100%; background: #fff;
-  border-radius: 40rpx 40rpx 0 0;
+  width: 100%; background: var(--card);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   max-height: 90vh;
   display: flex; flex-direction: column;
   padding-bottom: calc(env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 .sheet-handle {
-  width: 80rpx; height: 8rpx; border-radius: 999rpx; background: #d4dcd6;
-  align-self: center; margin: 24rpx 0 0;
+  width: 72rpx; height: 10rpx; border-radius: 999rpx; background: var(--fill);
+  align-self: center; margin: 16rpx 0 0;
 }
-.sheet-title { font-size: 40rpx; font-weight: 800; text-align: center; padding: 24rpx 0 10rpx; }
-.sheet-scroll { flex: 1; overflow: hidden; padding: 0 40rpx; }
+.sheet-title { font-size: 36rpx; font-weight: 600; text-align: center; padding: 20rpx 0 8rpx; }
+.sheet-scroll { flex: 1; overflow: hidden; padding: 0 32rpx; }
 
-/* 字段 */
-.field { margin-bottom: 36rpx; }
-.field-label { font-size: 32rpx; font-weight: 700; margin-bottom: 18rpx; }
+.field { margin-bottom: 32rpx; }
+.field-label { font-size: 30rpx; font-weight: 600; margin-bottom: 14rpx; }
 .field-hint { font-size: 26rpx; color: var(--text-sub); font-weight: 400; }
 .input {
-  height: 100rpx; background: #f3f5f1; border-radius: 20rpx;
-  padding: 0 28rpx; font-size: 36rpx; color: var(--text);
+  height: 96rpx; background: var(--fill); border-radius: var(--radius-sm);
+  padding: 0 24rpx; font-size: 34rpx; color: var(--text);
 }
 
-/* 剂量步进器 */
-.dose-row { display: flex; align-items: center; gap: 24rpx; flex-wrap: wrap; }
-.stepper { display: flex; align-items: center; background: #f3f5f1; border-radius: 20rpx; overflow: hidden; }
+.dose-row { display: flex; align-items: center; gap: 20rpx; flex-wrap: wrap; }
+.stepper { display: flex; align-items: center; background: var(--fill); border-radius: var(--radius-sm); overflow: hidden; }
 .step-btn {
-  width: 90rpx; height: 90rpx; display: flex; align-items: center; justify-content: center;
-  font-size: 44rpx; font-weight: 700; color: var(--primary-dark);
+  width: 88rpx; height: 88rpx; display: flex; align-items: center; justify-content: center;
+  font-size: 40rpx; font-weight: 600; color: var(--primary);
 }
-.step-val { width: 80rpx; text-align: center; font-size: 38rpx; font-weight: 800; }
-.unit-pills { display: flex; flex-wrap: wrap; gap: 14rpx; }
+.step-val { width: 76rpx; text-align: center; font-size: 36rpx; font-weight: 600; }
+.unit-pills { display: flex; flex-wrap: wrap; gap: 12rpx; }
 .unit-pill {
-  padding: 14rpx 28rpx; border-radius: 999rpx; font-size: 30rpx; font-weight: 600;
-  background: #f3f5f1; color: var(--text-sub); border: 3rpx solid transparent;
+  padding: 14rpx 26rpx; border-radius: 999rpx; font-size: 28rpx; font-weight: 600;
+  background: var(--fill); color: var(--text-sub); border: 2rpx solid transparent;
 }
-.unit-pill.on { background: var(--primary-soft); color: var(--primary-dark); border-color: var(--primary); }
+.unit-pill.on { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
 
-/* 时间段多选 */
-.timing-grid { display: flex; flex-wrap: wrap; gap: 18rpx; }
+.timing-grid { display: flex; flex-wrap: wrap; gap: 14rpx; }
 .timing-card {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  width: calc(25% - 14rpx); padding: 22rpx 0;
-  background: #f3f5f1; border-radius: 24rpx;
-  border: 4rpx solid transparent; box-sizing: border-box;
+  width: calc(25% - 11rpx); padding: 20rpx 0;
+  background: var(--fill); border-radius: var(--radius-sm);
+  border: 2rpx solid transparent; box-sizing: border-box;
 }
 .timing-card.on { background: var(--primary-soft); border-color: var(--primary); }
-.timing-emoji { font-size: 44rpx; }
-.timing-label { font-size: 24rpx; font-weight: 600; margin-top: 8rpx; color: var(--text); }
-.timing-card.on .timing-label { color: var(--primary-dark); }
+.timing-emoji { font-size: 40rpx; }
+.timing-label { font-size: 24rpx; font-weight: 600; margin-top: 6rpx; color: var(--text-secondary); }
+.timing-card.on .timing-label { color: var(--primary); }
 
-/* 服用周期 */
-.cycle-btns { display: flex; gap: 20rpx; }
+.cycle-btns { display: flex; gap: 16rpx; }
 .cycle-btn {
-  flex: 1; text-align: center; padding: 28rpx 0; border-radius: 24rpx;
-  font-size: 32rpx; font-weight: 700; background: #f3f5f1; color: var(--text-sub);
-  border: 4rpx solid transparent;
+  flex: 1; text-align: center; padding: 26rpx 0; border-radius: var(--radius-sm);
+  font-size: 30rpx; font-weight: 600; background: var(--fill); color: var(--text-sub);
+  border: 2rpx solid transparent;
 }
-.cycle-btn.on { background: var(--primary-soft); color: var(--primary-dark); border-color: var(--primary); }
+.cycle-btn.on { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
 
-/* 吃几天 */
-.duration-row { display: flex; align-items: center; gap: 20rpx; flex-wrap: wrap; }
-.duration-unit { font-size: 34rpx; font-weight: 700; }
-.duration-quick { display: flex; gap: 14rpx; flex-wrap: wrap; }
+.duration-row { display: flex; align-items: center; gap: 16rpx; flex-wrap: wrap; }
+.duration-unit { font-size: 32rpx; font-weight: 600; }
+.duration-quick { display: flex; gap: 12rpx; flex-wrap: wrap; }
 .quick-tag {
-  padding: 12rpx 24rpx; border-radius: 999rpx;
+  padding: 12rpx 22rpx; border-radius: 999rpx;
   font-size: 28rpx; font-weight: 600;
-  background: #f3f5f1; color: var(--text-sub); border: 3rpx solid transparent;
+  background: var(--fill); color: var(--text-sub); border: 2rpx solid transparent;
 }
-.quick-tag.on { background: var(--primary-soft); color: var(--primary-dark); border-color: var(--primary); }
+.quick-tag.on { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
 .duration-hint {
-  margin-top: 18rpx; padding: 18rpx 24rpx; border-radius: 16rpx;
-  background: #f3f9f4; font-size: 28rpx; color: var(--primary-dark); font-weight: 600;
+  margin-top: 14rpx; padding: 16rpx 20rpx; border-radius: var(--radius-sm);
+  background: var(--fill); font-size: 28rpx; color: var(--text-secondary); font-weight: 500;
 }
 
-/* 开始时间 */
-.start-btns { display: flex; gap: 20rpx; }
+.start-btns { display: flex; gap: 16rpx; }
 .start-btn {
-  flex: 1; text-align: center; padding: 28rpx 0; border-radius: 24rpx;
-  font-size: 32rpx; font-weight: 700; background: #f3f5f1; color: var(--text-sub);
-  border: 4rpx solid transparent;
+  flex: 1; text-align: center; padding: 26rpx 0; border-radius: var(--radius-sm);
+  font-size: 30rpx; font-weight: 600; background: var(--fill); color: var(--text-sub);
+  border: 2rpx solid transparent;
 }
-.start-btn.on { background: var(--primary-soft); color: var(--primary-dark); border-color: var(--primary); }
+.start-btn.on { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
 
-/* 底部操作 */
 .sheet-actions {
-  display: flex; gap: 24rpx;
-  padding: 24rpx 40rpx 32rpx;
-  border-top: 2rpx solid #eef1ea;
+  display: flex; gap: 16rpx;
+  padding: 20rpx 32rpx 28rpx;
+  border-top: 1rpx solid var(--separator);
 }
-.half { flex: 1; height: 106rpx; font-size: 36rpx; }
+.half { flex: 1; height: 96rpx; font-size: 34rpx; }
 
-/* 拍照确认卡 */
 .ocr-mask {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
   display: flex; align-items: center; justify-content: center; z-index: 100;
 }
 .ocr-card {
-  width: 88%; max-width: 640rpx; background: #fff; border-radius: 36rpx;
-  padding: 48rpx 40rpx; display: flex; flex-direction: column; align-items: center;
+  width: 88%; max-width: 640rpx; background: var(--card); border-radius: var(--radius-lg);
+  padding: 44rpx 36rpx; display: flex; flex-direction: column; align-items: center;
   margin: auto;
 }
-.ocr-title { font-size: 34rpx; color: var(--text-sub); margin-bottom: 20rpx; }
-.ocr-name { font-size: 48rpx; font-weight: 800; text-align: center; margin-bottom: 12rpx; }
-.ocr-detail { font-size: 32rpx; color: var(--text-sub); margin-bottom: 36rpx; text-align: center; }
-.ocr-btn { width: 100%; height: 110rpx; font-size: 38rpx; margin-bottom: 20rpx; }
+.ocr-title { font-size: 30rpx; color: var(--text-sub); margin-bottom: 16rpx; }
+.ocr-name { font-size: 44rpx; font-weight: 600; text-align: center; margin-bottom: 10rpx; }
+.ocr-detail { font-size: 30rpx; color: var(--text-sub); margin-bottom: 32rpx; text-align: center; }
+.ocr-btn { width: 100%; height: 96rpx; font-size: 34rpx; margin-bottom: 16rpx; }
 .ocr-family {
-  background: transparent; color: var(--text-sub); font-size: 30rpx; border: none;
+  background: transparent; color: var(--primary); font-size: 30rpx; font-weight: 500; border: none;
 }
 .ocr-family::after { border: none; }
 </style>

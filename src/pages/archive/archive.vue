@@ -14,20 +14,23 @@
     </view>
 
     <view v-for="g in groups" :key="g.date" class="group">
-      <view class="group-date">📅 {{ formatDate(g.date) }}</view>
-      <view v-for="item in g.items" :key="item.id" class="card arch-item">
-        <image class="arch-img" :src="item.imagePath" mode="aspectFill" @click="preview(item)" />
-        <view class="arch-info">
-          <view class="arch-type">{{ typeLabel(item.type) }}</view>
-          <view v-if="item.note" class="arch-note">{{ item.note }}</view>
+      <view class="group-date">{{ formatDate(g.date) }}</view>
+      <view class="arch-list">
+        <view v-for="item in g.items" :key="item.id" class="arch-item">
+          <image class="arch-img" :src="item.imagePath" mode="aspectFill" @click="preview(item)" />
+          <view class="arch-info">
+            <view class="arch-type">{{ typeLabel(item.type) }}</view>
+            <view v-if="item.note" class="arch-note">{{ item.note }}</view>
+          </view>
+          <button class="del-btn" @click="confirmDel(item)">删除</button>
         </view>
-        <button class="del-btn" @click="confirmDel(item)">删除</button>
       </view>
     </view>
 
     <!-- 选类型 -->
     <view v-if="pick.show" class="mask" @click="pick.show = false">
       <view class="sheet" @click.stop>
+        <view class="sheet-handle"></view>
         <view class="sheet-title">这是什么单据？</view>
         <view class="type-grid">
           <view
@@ -111,7 +114,7 @@ function confirmDel(item) {
   uni.showModal({
     title: '删除这份档案？',
     content: '删除后无法恢复，确定吗？',
-    confirmColor: '#dd524d',
+    confirmColor: '#FF3B30',
     success: (res) => {
       if (res.confirm) removeArchive(item.id)
     }
@@ -120,44 +123,62 @@ function confirmDel(item) {
 </script>
 
 <style scoped>
-.archive { padding-top: calc(env(safe-area-inset-top) + 40rpx); }
-.header { margin-bottom: 28rpx; }
-.add-btn { height: 106rpx; font-size: 36rpx; margin-bottom: 28rpx; }
+.archive { padding-top: calc(env(safe-area-inset-top) + 24rpx); }
+.header { margin-bottom: var(--gap-section); }
+.add-btn { height: 96rpx; font-size: 34rpx; margin-bottom: var(--gap-section); }
 
-.empty { display: flex; flex-direction: column; align-items: center; gap: 14rpx; padding: 60rpx 32rpx; }
-.empty-emoji { font-size: 90rpx; }
-.empty-text { font-size: 34rpx; color: var(--text-sub); }
-.empty-hint { font-size: 28rpx; color: var(--text-sub); text-align: center; }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 12rpx; padding: 56rpx 32rpx; }
+.empty-emoji { font-size: 72rpx; }
+.empty-text { font-size: 32rpx; color: var(--text-sub); font-weight: 500; }
+.empty-hint { font-size: 28rpx; color: var(--text-sub); text-align: center; line-height: 1.45; }
 
-.group { margin-bottom: 32rpx; }
-.group-date { font-size: 32rpx; font-weight: 800; margin-bottom: 16rpx; }
-.arch-item { display: flex; align-items: center; gap: 20rpx; margin-bottom: 20rpx; }
-.arch-img { width: 140rpx; height: 140rpx; border-radius: 16rpx; flex-shrink: 0; background: #eef1ea; }
-.arch-info { flex: 1; }
-.arch-type { font-size: 34rpx; font-weight: 700; }
-.arch-note { font-size: 26rpx; color: var(--text-sub); margin-top: 6rpx; }
+.group { margin-bottom: var(--gap-section); }
+.group-date {
+  font-size: 26rpx; font-weight: 600; color: var(--text-sub);
+  margin-bottom: 10rpx; padding-left: 8rpx; letter-spacing: 0.5rpx;
+}
+.arch-list {
+  background: var(--card); border-radius: var(--radius-md); overflow: hidden;
+}
+.arch-item {
+  display: flex; align-items: center; gap: 20rpx;
+  padding: 24rpx 28rpx; border-bottom: 1rpx solid var(--separator);
+}
+.arch-item:last-child { border-bottom: none; }
+.arch-img { width: 128rpx; height: 128rpx; border-radius: var(--radius-sm); flex-shrink: 0; background: var(--fill); }
+.arch-info { flex: 1; min-width: 0; }
+.arch-type { font-size: 32rpx; font-weight: 600; }
+.arch-note { font-size: 26rpx; color: var(--text-sub); margin-top: 4rpx; }
 .del-btn {
-  height: 72rpx; padding: 0 24rpx; border-radius: 16rpx;
-  background: #fdecec; color: #dd524d; font-size: 28rpx; font-weight: 700; border: none;
+  height: 68rpx; padding: 0 22rpx; border-radius: var(--radius-sm);
+  background: var(--danger-soft); color: var(--danger); font-size: 28rpx; font-weight: 600; border: none;
+  flex-shrink: 0;
 }
 .del-btn::after { border: none; }
 
 .mask {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
   display: flex; align-items: flex-end; z-index: 99;
 }
 .sheet {
-  width: 100%; background: #fff; border-radius: 40rpx 40rpx 0 0;
-  padding: 40rpx 40rpx calc(env(safe-area-inset-bottom) + 40rpx);
+  width: 100%; background: var(--card);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 16rpx 32rpx calc(env(safe-area-inset-bottom) + 32rpx);
 }
-.sheet-title { font-size: 38rpx; font-weight: 800; text-align: center; margin-bottom: 28rpx; }
-.type-grid { display: flex; flex-wrap: wrap; gap: 20rpx; margin-bottom: 32rpx; }
+.sheet-handle {
+  width: 72rpx; height: 10rpx; border-radius: 999rpx; background: var(--fill);
+  margin: 0 auto 20rpx;
+}
+.sheet-title { font-size: 34rpx; font-weight: 600; text-align: center; margin-bottom: 24rpx; }
+.type-grid { display: flex; flex-wrap: wrap; gap: 16rpx; margin-bottom: 28rpx; }
 .type-card {
-  width: calc(50% - 10rpx); padding: 32rpx 0; text-align: center;
-  background: #f3f5f1; border-radius: 24rpx; border: 4rpx solid transparent; box-sizing: border-box;
+  width: calc(50% - 8rpx); padding: 28rpx 0; text-align: center;
+  background: var(--fill); border-radius: var(--radius-sm);
+  border: 2rpx solid transparent; box-sizing: border-box;
 }
 .type-card.on { background: var(--primary-soft); border-color: var(--primary); }
-.type-emoji { font-size: 52rpx; display: block; }
-.type-name { font-size: 30rpx; font-weight: 700; margin-top: 10rpx; display: block; }
-.save-type { height: 106rpx; font-size: 36rpx; }
+.type-emoji { font-size: 48rpx; display: block; }
+.type-name { font-size: 28rpx; font-weight: 600; margin-top: 8rpx; display: block; color: var(--text-secondary); }
+.type-card.on .type-name { color: var(--primary); }
+.save-type { height: 96rpx; font-size: 34rpx; }
 </style>
