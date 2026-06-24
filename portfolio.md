@@ -1,6 +1,7 @@
 ---
 title: 长青伙伴
 description: 用「养树浇水」代替冷冰冰的吃药提醒，帮老人愿意每天主动打卡。
+published: true
 tags:
   - uni-app
   - Vue 3
